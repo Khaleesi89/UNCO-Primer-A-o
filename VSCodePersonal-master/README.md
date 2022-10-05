@@ -1,0 +1,3 @@
+# VSCodePersonal
+- *Carpeta de los archivos del VSCode para la Tecnicatura Universitaria en Desarrollo Web*
+> Inicio 2021 - ...
