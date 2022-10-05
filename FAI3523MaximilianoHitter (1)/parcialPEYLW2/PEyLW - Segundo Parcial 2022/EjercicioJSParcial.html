@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Parcial JS </title>
+    <link href="default.css" rel="stylesheet" type="text/css" />
+
+    <script>
+        // Resuelva el parcial en esta seccion
+        // Ud. puede usar o no esta variable. No es obligatorio.
+        var RegistroVotantes = new Array();
+
+        //SE CARGA LA PAGINA Y SE EJECUTA ESTO MIENTRAS SE ESTA COMPLETANDO LOS CAMPOS
+        //EMPIEZA POR ACA Q ES CUANDO CARGA LA PAGINA
+        document.addEventListener('DOMContentLoaded', () => {
+                let arrayResultados = Array();
+                //selectores de inputs y formulario 
+                const candidato = document.getElementById('txCandidato');
+                const dni = document.getElementById('txDNI');
+                const sexo = document.getElementById('txSexo');
+                const boton = document.querySelector('#txBoton');
+                
+                
+                //SE PONE FORM PARA HACER LUEGO EL RESET DE LOS CAMPOS AL FINAL
+                const formulario = document.querySelector('#txForm');
+                
+                
+                
+                //selectores de las cantidades
+                const cantidadKang = document.querySelector('#ResultadosKang');
+                const cantidadKodos = document.querySelector('#ResultadosKodos');
+                const cantidadBlanco = document.querySelector('#ResultadosBlanco');
+                //selector de los votantes 
+                const votantes = document.querySelector('#Votantes');
+                let votantesValor = document.querySelector('#Votantes').value;
+                //pal input de candidato
+                candidato.addEventListener('change', (e) => {
+                    let valor = e.target.value.toUpperCase();
+                    //console.log(valor);
+                    if (valor == 'KANG') {
+                        candidato.style.border = '5px solid green';
+                        arrayResultados[0] = 'KANG';
+                    } else if (valor == 'KODOS') {
+                        candidato.style.border = '5px solid green';
+                        arrayResultados[0] = 'KODOS';
+                    } else if (valor == 'BLANCO') {
+                        candidato.style.border = '5px solid green';
+                        arrayResultados[0] = 'BLANCO';
+                    } else {
+                        candidato.style.border = '5px solid red';
+                    }
+
+                });
+
+                //pal input de DNI CUANDO HAY UN CAMBIO EN EL INPUT DE DNI
+                
+                dni.addEventListener('change', (e) => {
+                    let valor = e.target.value;
+                    let valorStr = valor.split('.');
+                    //console.table(valorStr);
+                    let dniFinal = '';
+                    if (valorStr[1] == '') {
+                        dniFinal = valorStr[0];
+                        dniFinal = parseInt(dniFinal);
+                    } else {
+                        dniFinal = valorStr[0] + valorStr[1] + valorStr[2];
+                        dniFinal = parseInt(dniFinal);
+                    }
+                    //console.log(dniFinal);
+                    if (dniFinal < 999999999 && dniFinal > 1000000) {
+                        dni.style.border = '5px solid green';
+                        arrayResultados[1] = dniFinal;
+                    } else {
+                        dni.style.border = '5px solid red';
+                    }
+                })
+
+                //pal input de sexo 
+                sexo.addEventListener('change', (e) => {
+                    let valor = e.target.value.toUpperCase();
+                    if (valor == 'F' || valor == 'M') {
+                        sexo.style.border = '5px solid green';
+                        arrayResultados[2] = valor;
+                    } else {
+                        sexo.style.border = '5px solid red';
+                    }
+                })
+
+                boton.addEventListener('click', () => {
+                    if (sexo.style.border == '5px solid red' || dni.style.border == '5px solid red' || candidato.style.border == '5px solid red') {
+                        let stringError = '';
+                        if (sexo.style.border == '5px solid red') {
+                            stringError = ' Sexo ';
+                        }
+                        if (dni.style.border == '5px solid red') {
+                            stringError = stringError + ' DNI ';
+                        }
+                        if (candidato.style.border == '5px solid red') {
+                            stringError = stringError + ' Candidato ';
+                        }
+
+                        console.log()
+
+                        alert(`Usted tiene un error en alguno de los siguientes campos: ${stringError}`);
+                    } else {
+                        //revisar si ya voto
+                        if (RegistroVotantes.includes(arrayResultados[1])) {
+                            alert('Esta persona ya emitió su voto. El fraude está mal claro que sí');
+                            formulario.reset();
+                            candidato.style.border = '1px solid black';
+                            sexo.style.border = '1px solid black';
+                            dni.style.border = '1px solid black';
+                        } else {
+                            //agregar el dni
+                            RegistroVotantes.push(arrayResultados[1]);
+                            //registrar el voto
+                            if (arrayResultados[0] == 'KODOS') {
+                                let votosKodos = parseInt(cantidadKodos.innerHTML);
+                                votosKodos++;
+                                cantidadKodos.innerHTML = votosKodos;
+                            } else if (arrayResultados[0] == 'KANG') {
+                                let votosKang = parseInt(cantidadKang.innerHTML);
+                                votosKang++;
+                                cantidadKang.innerHTML = votosKang;
+                            } else if (arrayResultados[0] == 'BLANCO') {
+                                let votosBlanco = parseInt(cantidadBlanco.innerHTML);
+                                votosBlanco++;
+                                cantidadBlanco.innerHTML = votosBlanco;
+                            }
+                            formulario.reset();
+                            candidato.style.border = '1px solid black';
+                            sexo.style.border = '1px solid black';
+                            dni.style.border = '1px solid black';
+                        }
+                        //console.table(RegistroVotantes);
+                        //actualizar los votantes
+                        if (votantesValor == undefined) {
+                            votantesValor = arrayResultados[1];
+                            //votantes.innerHTML = arrayResultados[1];
+                            //console.log(votantesValor);
+                            votantes.innerHTML = votantesValor;
+                            //console.log(votantes);
+                        } else {
+                            //console.log(votantesValor);
+                            votantesValor = votantesValor + ' - ' + arrayResultados[1];
+                            votantes.innerHTML = votantesValor;
+
+                        }
+
+
+
+                    }
+                })
+            })
+            // https://www.w3schools.com/jsref/jsref_push.asp
+    </script>
+
+
+</head>
+
+<body>
+    <div id="header">
+        <div id="logo" style="margin-left: 15px">
+            <h1><a href="#">Programación Estática y Laboratorio Web</a></h1>
+            <h2><a href="#">Parcial JS - 24/06/2022</a></h2>
+        </div>
+    </div>
+    <div id="menu">
+        <ul>
+            <li><a href="Consigna.html">Consigna</a></li>
+            <li><a href="EjercicioJSParcial.html">HOJA Ejercicio</a></li>
+        </ul>
+    </div>
+    <div id="content">
+
+        <form id="txForm">
+            <table style="padding: 10px;">
+                <tr>
+                    <td>Candidato:</td>
+                    <td><input id="txCandidato" name="txCandidato" type="text" style="width:280px" /></td>
+                </tr>
+                <tr>
+                    <td>DNI:</td>
+                    <td><input id="txDNI" name="txDNI" type="text" style="width:280px" /></td>
+                </tr>
+                <tr>
+                    <td>Sexo:</td>
+                    <td><input id="txSexo" name="txSexo" type="text" style="width:64px" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="button" value="Registrar" id="txBoton"></td>
+                </tr>
+
+            </table>
+        </form>
+        <p></p>
+
+        <div style="background-color: lightblue; border: 1px solid black;padding: 10px;">
+            <span id="ResultadosKang" style="font-size: 72px;">0</span>
+            <img src="images/VoteKang.png" height="80" style="float:right">
+
+        </div>
+        <br />
+
+        <div style="background-color: lightpink; border: 1px solid black;padding: 10px;">
+            <span id="ResultadosKodos" style="font-size: 72px;">0</span>
+            <img src="images/VoteKodos.png" height="80" style="float:right">
+
+        </div>
+        <br />
+
+        <div style="padding: 10px;">
+            <span style="font-size: 36px;">En Blanco: </span> <span id="ResultadosBlanco" style="font-size: 36px;">0</span>
+        </div>
+
+        <br /> Votantes:
+        <div id="Votantes" style="border: 1px solid black;padding: 10px;">
+
+
+        </div>
+
+
+        </table>
+
+    </div>
+    <div id="footer" style="margin-top: 240px;">
+        <p id="legal">Copyright &copy; AtomoHost. All Rights Reserved. Designed by <a href="http://www.freecsstemplates.org/">Free CSS
+                Templates</a>.</p>
+        <p id="links"><a href="#">Privacy Policy</a> | <a href="#">Terms
+                of Use</a></p>
+    </div>
+    <br />
+    <br />
+</body>
+
+</html>
