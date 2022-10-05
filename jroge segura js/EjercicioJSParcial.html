@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Parcial JS </title>
+    <link href="default.css" rel="stylesheet" type="text/css" />
+
+    <script>
+        // Resuelva el parcial en esta seccion
+        // Ud. puede usar o no esta variable. No es obligatorio.
+        var RegistroVotantes = new Array();
+
+        // https://www.w3schools.com/jsref/jsref_push.asp
+
+        //LAS USAMOS EN TODAS LAS FUNCIONES
+        var votosKANG=0;
+        var votosKODOS=0;
+        var votosBLANCO=0;
+
+
+        function votar(){                       //1111111
+            //UNA FUNCION POR CADA CUADRO
+            var a=verificoCandidato();
+            var b=verificoDNI();
+            var c=verificoSexo();
+
+            //SI TODAS ESAS VERIFICACIONES SON TRUE, HACE LO SIGUIENTE
+            if (a && b && c){
+                //GUARDO EL CANDIDATO EN MAYUSCULA
+                var elCandidato=document.getElementById("txCandidato").value.toUpperCase();
+                //GUARDO EL INT DE DNI
+                var nroDni=parseInt(document.getElementById("txDNI").value);
+                //GUARDO EL VALOR DE SEXO
+                var elSexo=document.getElementById("txSexo").value.toUpperCase();
+
+                if (existeVotante(nroDni)){
+                    alert("Esta persona ya emitió su voto. El fraude está mal claro que sí");
+                }else{
+                   //alert("VOTANDO!") ;
+                    sumarVoto(elCandidato);
+                    RegistroVotantes.push(nroDni);
+                    agrego_DNI_al_DIV(document.getElementById("txDNI").value);
+                    limpiar();
+                }
+            }else{
+                alert("Error!") ;
+            }
+
+        }
+
+        //AGREGA EL DNI AL TEXTAREA
+        
+        function agrego_DNI_al_DIV(txDni){                  /////77777777777777777
+            document.getElementById("Votantes").innerHTML+=txDni+" - ";
+        }
+
+        //VACIA TODOS LOS CAMPOS
+        function limpiar(){                                     /////88888888888888888888
+            document.getElementById("txCandidato").value="";
+            document.getElementById("txDNI").value="";
+            document.getElementById("txSexo").value="";
+
+            document.getElementById("txCandidato").style.borderColor="";
+            document.getElementById("txDNI").style.borderColor="";
+            document.getElementById("txSexo").style.borderColor="";
+        }
+
+        //SE FIJA SI ESE DNI ESTA REGISTRADO EN EL ARRAY DE LOS VOTANTES
+
+
+        //????? EN EL FOR, EL i NO DEBERIA ESTAR EL I++???
+
+        //ESTA FUNCION RETORNA TRUE SI ESTA EL VOTANTE EN EL ARRAY
+        function existeVotante(elDni){              //555555555555555555
+            var exito=false;
+            //RECORRE TODO EL ARRAY
+            for( i in RegistroVotantes){
+                //COMPARA A LOS VOTANTES CON EL PARAMTRO 
+                if (RegistroVotantes[i]==elDni){
+                    exito=true;
+                }
+            }
+            return exito;
+        }
+        //EL PARAMETRO ENTRA EN UN SWITCH Y SEGUN LO INGRESADO COMO CANDIDATO
+        function sumarVoto(elCandidato){                ////////666666666666666666
+            switch (elCandidato){
+                case "KANG": 
+                // SI ESTO SUCEDE, SE SUMA UN VOTO AL VOTOS KANG
+                    votosKANG++;
+                    //Y ESCRIBE LA CANTIDAD DE VOTOS
+                    document.getElementById("ResultadosKang").innerHTML=votosKANG;
+                    break;
+                case "KODOS": 
+                    votosKODOS++;
+                    document.getElementById("ResultadosKodos").innerHTML=votosKODOS;
+                    break;
+                case "BLANCO": 
+                    votosBLANCO++
+                    document.getElementById("ResultadosBlanco").innerHTML=votosBLANCO;
+                    break;
+            }
+        }
+
+        //VERIFICO QUE LO INGRSADO SEA LAS OPCIONES Q DEBEN SER...SI VERIFCA FALSE, MARCA CON ROJO Y RETORNA FALSE
+        function verificoCandidato(){                       //22222222
+            var exito=true;
+            var candidato=document.getElementById("txCandidato").value.toUpperCase();
+            switch (candidato){
+
+                //SI ELIGE LOS STRING Q DEBEN SER NO MARCARIA NADA PERO SINO, ES ROJO
+                case "KANG": 
+                    //alert("Eligio KONG") ;
+                    document.getElementById("txCandidato").style.borderColor="";
+                    break;
+                case "KODOS": 
+                    //alert("Eligio KODOS") ;
+                    document.getElementById("txCandidato").style.borderColor="";
+                    break;
+                case "BLANCO": 
+                    //alert("Eligio BLANCO") ;
+                    document.getElementById("txCandidato").style.borderColor="";
+                    break;
+                default:
+                    alert("Error en Candidato") ;
+                    document.getElementById("txCandidato").style.borderColor="red";
+                    exito=false;
+                    break;
+            }
+            return exito;
+        }
+
+        //RETORNA FALSE SI ES INCORRECTO SINO DEJA TODO IGUAL
+        function verificoDNI(){                     //3333333333333
+            var exito=true;
+            var elDni=parseInt(document.getElementById("txDNI").value);
+            if (elDni>=1000000 && elDni<=999999999){
+                //alert("Exito") ;
+                document.getElementById("txDNI").style.borderColor="";
+            }else{
+                exito=false;
+                alert("Error en DNI") ;
+                document.getElementById("txDNI").style.borderColor="red";
+            }
+            return exito;
+        }
+
+        function verificoSexo(){                    //444444444444444444
+            var exito=true;
+            var elSexo=document.getElementById("txSexo").value.toUpperCase();
+            if (elSexo!="M" && elSexo!="F"){
+                exito=false;
+                alert("Error en Sexo") ;
+                document.getElementById("txSexo").style.borderColor="red";
+            }else{
+                //alert("EXITO") ;
+                document.getElementById("txSexo").style.borderColor="";
+            }
+            return exito;
+        }
+
+
+    </script>
+
+
+</head>
+
+<body>
+    <div id="header">
+        <div id="logo" style="margin-left: 15px">
+            <h1><a href="#">Programación Estática y Laboratorio Web</a></h1>
+            <h2><a href="#">Parcial JS - 24/06/2022</a></h2>
+        </div>
+    </div>
+    <div id="menu">
+        <ul>
+            <li><a href="Consigna.html">Consigna</a></li>
+            <li><a href="EjercicioJSParcial.html">HOJA Ejercicio</a></li>
+        </ul>
+    </div>
+    <div id="content">
+
+        <form>
+            <table style="padding: 10px;">
+                <tr>
+                    <td>Candidato:</td>
+                    <td><input id="txCandidato" name="txCandidato" type="text" style="width:280px" /></td>
+                </tr>
+                <tr>
+                    <td>DNI:</td>
+                    <td><input id="txDNI" name="txDNI" type="text" style="width:280px" /></td>
+                </tr>
+                <tr>
+                    <td>Sexo:</td>
+                    <td><input id="txSexo" name="txSexo" type="text" style="width:64px" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="button" value="Registrar" onclick="votar()"></td>
+                </tr>
+
+            </table>
+        </form>
+        <p></p>
+
+        <div style="background-color: lightblue; border: 1px solid black;padding: 10px;">
+            <span id="ResultadosKang" style="font-size: 72px;">0</span>
+            <img src="images/VoteKang.png" height="80" style="float:right">
+
+        </div>
+        <br />
+
+        <div style="background-color: lightpink; border: 1px solid black;padding: 10px;">
+            <span id="ResultadosKodos" style="font-size: 72px;">0</span>
+            <img src="images/VoteKodos.png" height="80" style="float:right">
+
+        </div>
+        <br />
+
+        <div style="padding: 10px;">
+            <span style="font-size: 36px;">En Blanco: </span> <span id="ResultadosBlanco"
+                style="font-size: 36px;">0</span>
+        </div>
+
+        <br />
+
+        Votantes:
+        <div id="Votantes" style="border: 1px solid black;padding: 10px;">
+            
+
+        </div>
+
+
+        </table>
+
+    </div>
+    <div id="footer" style="margin-top: 240px;">
+        <p id="legal">Copyright &copy; AtomoHost. All Rights Reserved.
+            Designed by <a href="http://www.freecsstemplates.org/">Free CSS
+                Templates</a>.</p>
+        <p id="links"><a href="#">Privacy Policy</a> | <a href="#">Terms
+                of Use</a></p>
+    </div>
+    <br />
+    <br />
+</body>
+
+</html>
