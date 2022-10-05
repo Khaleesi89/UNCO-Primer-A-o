@@ -1,0 +1,147 @@
+case 1
+	//Jugar tateti 
+            $juego = jugar();
+            imprimirResultado($juego);
+            //Guardar resultado en crudo
+            if(count($jugadosCrudo)>0){
+                $jugadosCrudo[count($jugadosCrudo)] = $juego;
+            }else{
+                $jugadosCrudo[0] = $juego;
+            }
+            //Añadir resultados a array filtrado
+            $jugadosFiltrado = actualizarValores($jugadosCrudo);
+            break;
+
+case 2 
+	//Mostrar un juego
+            if(count($jugadosCrudo) > 0){
+                echo "Ingrese el número de juego que desea ver: ";
+                $numJuego = trim(fgets(STDIN));
+                while((($numJuego) > (count($jugadosCrudo)-1)) || !isset($jugadosCrudo)){
+                    echo "El número de juego no existe, ingrese un número válido.\n";
+                    $numJuego = trim(fgets(STDIN));
+                }
+                //Mostrar el juego pedido
+                mostrarJuego($numJuego, $jugadosFiltrado);
+            }else{
+                echo "No hay ningún juego registrado.\n";
+            }
+            break;
+case 3
+	//Mostrar el primer juego ganador
+            if(count($jugadosCrudo) > 0) {
+                echo "Ingrese el nombre del Jugador a buscar: ";
+                $nombreGanador = trim(fgets(STDIN));
+                $cont = 0;
+                $flag = false;
+                do {
+                    if ($nombreGanador == $jugadosFiltrado[$cont]['nombreGanador']) {
+                        mostrarJuego($cont, $jugadosFiltrado);
+                        $flag = true;
+                    }
+                    $cont++;
+                } while (($cont < (count($jugadosFiltrado))) && ($nombreGanador == $jugadosFiltrado[$cont]['nombreGanador']));
+                if ($flag == false) {
+                    echo "El jugador " . $nombreGanador . " no ganó ningún juego\n";
+                }
+            } else {
+                echo "No hay ningún juego registrado.\n";
+            }
+            break;
+case 4
+	//Mostrar porcentaje de juegos ganados
+            if(count($jugadosCrudo) > 0) {
+                echo "Ingrese el símbolo por el cual desea saber el porcentaje, sea X o O.";
+                $simbolo = trim(fgets(STDIN));
+                $contadorX = 0;
+                $contadorO = 0;
+                for ($j=0; $j < count($jugadosFiltrado); $j++) { 
+                    if($jugadosFiltrado[$j]['puntosX'] > $jugadosFiltrado[$j]['puntosO']){
+                        $contadorX++;
+                    }elseif($jugadosFiltrado[$j]['puntosO'] > $jugadosFiltrado[$j]['puntosX']){
+                        $contadorO++;
+                    }
+                }
+                $promX = ($contadorX / (count($jugadosFiltrado)-1))*100;
+                $promO = ($contadorO / (count($jugadosFiltrado)-1))*100;
+                if($simbolo == "X" || $simbolo == "x"){
+                    echo "El porcentaje de juegos ganados por " . $simbolo . " es: " . $promX . "%\n";
+                }elseif($simbolo == "O" || $simbolo == "o"){
+                    echo "El porcentaje de juegos ganados por " . $simbolo . " es: " . $promO . "%\n";
+                }
+            } else {
+                echo "No hay ningún juego registrado.\n";
+            }
+            break;
+case 5
+	//Mostrar resumen de jugador
+            if(count($jugadosCrudo) > 0) {
+                echo "Ingrese el nombre de un jugador para ver su resumen: \n";
+                $jugadorResumen = trim(fgets(STDIN));
+                //Comprobar si el jugador existe
+                $l = 0;
+                $bandera = false;
+                do{
+                    if($jugadosFiltrado[$l]['jugadorX'] == $jugadorResumen){
+                        $bandera = true;
+                    }elseif($jugadosFiltrado[$l]['jugadorO'] == $jugadorResumen){
+                        $bandera = true;
+                    }
+                    $l++;
+                }while(($bandera == false) || ($l < count($jugadosFiltrado)));
+                if($bandera == false){
+                    echo "El jugador no posee registros.\n";
+                }else{
+                    $gana = 0;
+                    $pierde = 0;
+                    $empata = 0;
+                    $puntos = 0;
+                    for($k=0; $k < count($jugadosFiltrado); $k++) { 
+                        if($jugadosFiltrado[$k]['jugadorX'] == $jugadorResumen){
+                            if($jugadosFiltrado[$k]['puntosX'] > $jugadosFiltrado[$k]['puntosO']){
+                                $gana++;
+                            }elseif($jugadosFiltrado[$k]['puntosX'] == $jugadosFiltrado[$k]['puntosO']){
+                                $empata++;
+                            }elseif($jugadosFiltrado[$k]['puntosX'] < $jugadosFiltrado[$k]['puntosO']){
+                                $pierde++;
+                            }
+                            $puntos += $jugadosFiltrado[$k]['puntosX'];
+                        }elseif($jugadosFiltrado[$k]['jugadorO'] == $jugadorResumen){
+                            if($jugadosFiltrado[$k]['puntosO'] > $jugadosFiltrado[$k]['puntosX']){
+                                $gana++;
+                            }elseif($jugadosFiltrado[$k]['puntosO'] == $jugadosFiltrado[$k]['puntosX']){
+                                $empata++;
+                            }elseif($jugadosFiltrado[$k]['puntosO'] < $jugadosFiltrado[$k]['puntosX']){
+                                $pierde++;
+                            }
+                            $puntos += $jugadosFiltrado[$k]['puntosO'];
+                        }
+                    }
+                //Presentar por pantalla
+                echo "***********************************\n";
+                echo "Jugador: " . $jugadorResumen . "\n";
+                echo "Ganó: " . $gana . " juegos\n";
+                echo "Perdió: " . $pierde . " juegos\n";
+                echo "Empató: " . $empata . " juegos\n";
+                echo "Total de puntos acumulados: " . $puntos . " puntos\n";
+                echo "***********************************\n";
+                }                
+            }else{
+                echo "No hay ningún juego registrado.\n";
+            }
+            break;
+case 6
+	//Mostrar listado de juegos ordenado por jugador O
+            if (count($jugadosCrudo) > 0) {
+                //Aca va el codigo
+            } else {
+                echo "No hay ningún juego registrado.\n";
+            }
+            break;
+case 7
+	//salir 
+            $opcion = "X";
+            break;
+default:
+            echo "Ingrese un número del 1 al 7.\n";
+            echo "\n";
