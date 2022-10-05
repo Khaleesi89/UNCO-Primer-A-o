@@ -1,0 +1,27 @@
+<?php
+
+class Pepito{
+
+    private $real;
+    
+
+    /**
+     * Get the value of real
+     */ 
+    public function getReal()
+    {
+        return $this->real;
+    }
+
+    /**
+     * Set the value of real
+     *
+     * @return  self
+     */ 
+    public function setReal($real)
+    {
+        $this->real = $real;
+
+        return $this;
+    }
+}
