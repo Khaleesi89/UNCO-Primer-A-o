@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Parcial JS </title>
+    <link href="default.css" rel="stylesheet" type="text/css" />
+
+    <script>
+        // Resuelva el parcial en esta seccion
+        // Ud. puede usar o no esta variable. No es obligatorio.
+        var RegistroVotantes = new Array();
+
+        // https://www.w3schools.com/jsref/jsref_push.asp
+
+
+
+        function registrar(){               //CON EL SUBMIT EMPIEZA AQUI
+            var candidato= document.getElementById('txCandidato')
+            var DNI= document.getElementById('txDNI')
+            var sexo= document.getElementById('txSexo')
+            var votantes= document.getElementById('Votantes')
+
+            
+
+            // aux
+            var auxcandidato= candidato.value.toLowerCase()
+            var auxDNI= DNI.value
+            var auxSexo= sexo.value.toLowerCase()
+            //contadores span
+
+            var ResultadosKang= document.getElementById('ResultadosKang')
+            var ResultadosKodos= document.getElementById('ResultadosKodos')
+            var ResultadosBlanco= document.getElementById('ResultadosBlanco')
+
+
+
+            console.log(auxDNI);
+
+            var comprobacion1= false
+            var comprobacion2= false
+            var comprobacion3= false
+
+            var kang= false
+            var kodos= false
+            var blanco= false
+
+            //comprobacion candidato compuebo si escribio bien o si esta vacio
+            if ((auxcandidato == 'kodos') || (auxcandidato == 'kang') || (auxcandidato== 'blanco') ) {
+                comprobacion1=true
+            }
+            if (auxcandidato.length == 0 || !((auxcandidato == 'kodos') || (auxcandidato == 'kang') || (auxcandidato== 'blanco') )) {
+                candidato.style.border= "2px red solid"
+                alert('INGRESE UN CANDIDATO CORRECTO')
+                
+            }
+
+            if (auxcandidato == 'kang') {
+                comprobacion1= true
+                kang=true
+            }
+            if (auxcandidato == 'kodos') {
+                comprobacion1= true
+                kodos=true
+            }
+            if (auxcandidato == 'blanco') {
+                comprobacion1= true
+                blanco=true
+            }
+
+
+
+            // validaciones documento
+            if (auxDNI > 1000000 && auxDNI < 999999999) {
+                
+
+                //busco que este dni no exista ya
+                var largoarray= RegistroVotantes.length
+                var i=0
+                
+                comprobacion2= true
+                do {
+                    
+
+                    if (RegistroVotantes[i] == auxDNI) {
+                        i= largoarray
+
+                        comprobacion2=false
+
+                        DNI.style.border= "2px red solid"
+                        alert('Esta persona ya emitió su voto. El fraude está mal claro que sí')
+                        
+                        votantes.style.border= "2px red solid"
+                    }
+                    i++
+                } while (i < largoarray);
+
+
+            }
+            if (auxDNI.length == 0 || !(auxDNI > 1000000 && auxDNI < 999999999)) {
+                alert('tiene que ingresar un documento valido sin punto')
+                DNI.style.border= "2px red solid"
+            }
+
+
+
+            //validaciones sexo
+            if (auxSexo == 'f' || auxSexo == 'm') {
+                comprobacion3= true          
+            } else{
+
+                
+                sexo.style.border= "2px red solid"
+                alert('INGRESE BIEN SU SEXO F/M')
+
+            }
+
+
+
+            //compruebo que se hayan ingresado bien los datos
+            if (comprobacion1 && comprobacion2 && comprobacion3) {
+                
+
+                //agrego el botante a un registro 
+                RegistroVotantes.push(auxDNI)
+
+                
+                // esto agrega a votantes el numero de documento
+                votantes.textContent= votantes.textContent + '-' + auxDNI
+
+                // veo a quien es el boto
+                if (kang) {
+                    ResultadosKang.textContent=  parseInt(ResultadosKang.textContent) + 1
+                }
+                if (kodos) {
+                    ResultadosKodos.textContent= parseInt(ResultadosKodos.textContent) + 1
+                }
+                if (blanco) {
+                    ResultadosBlanco.textContent= parseInt(ResultadosBlanco.textContent) + 1
+                }
+            }
+
+
+            
+        }
+        //vuelve todos los furmularios a la normalidad
+        //esta en el body y en el los formularios
+        function volverNormal() {
+            var candidato= document.getElementById('txCandidato')
+            var DNI= document.getElementById('txDNI')
+            var sexo= document.getElementById('txSexo')
+            var votantes= document.getElementById('Votantes')
+
+
+            
+            candidato.style.borderColor= "rgb(118, 118, 118)"
+            DNI.style.borderColor= "rgb(118, 118, 118)"
+            sexo.style.borderColor= "rgb(118, 118, 118)"
+            
+            votantes.style.borderColor= "rgb(118, 118, 118)"
+
+
+            candidato.style.border= "1px solid"
+            DNI.style.border= "1px solid"
+            sexo.style.border= "1px solid"
+            votantes.style.border= "1px solid"
+
+
+        }
+    </script>
+
+
+</head>
+
+<body onload="volverNormal()">
+    <div id="header">
+        <div id="logo" style="margin-left: 15px">
+            <h1><a href="#">Programación Estática y Laboratorio Web</a></h1>
+            <h2><a href="#">Parcial JS - 24/06/2022</a></h2>
+        </div>
+    </div>
+    <div id="menu">
+        <ul>
+            <li><a href="Consigna.html">Consigna</a></li>
+            <li><a href="EjercicioJSParcial.html">HOJA Ejercicio</a></li>
+        </ul>
+    </div>
+    <div id="content">
+
+        <form>
+            <table style="padding: 10px;">
+                <tr>
+                    <td>Candidato:</td>
+                    <td><input id="txCandidato" name="txCandidato" type="text" style="width:280px" onclick="volverNormal()"/></td>
+                </tr>
+                <tr>
+                    <td>DNI:</td>
+                    <td><input id="txDNI" name="txDNI" type="text" style="width:280px" onclick="volverNormal()"/></td>
+                </tr>
+                <tr>
+                    <td>Sexo:</td>
+                    <td><input id="txSexo" name="txSexo" type="text" style="width:64px" onclick="volverNormal()"/></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="button" value="Registrar" onclick="registrar()" ></td>
+                </tr>
+
+            </table>
+        </form>
+        <p></p>
+
+        <div style="background-color: lightblue; border: 1px solid black;padding: 10px;">
+            <span id="ResultadosKang" style="font-size: 72px;">0</span>
+            <img src="images/VoteKang.png" height="80" style="float:right">
+
+        </div>
+        <br />
+
+        <div style="background-color: lightpink; border: 1px solid black;padding: 10px;">
+            <span id="ResultadosKodos" style="font-size: 72px;">0</span>
+            <img src="images/VoteKodos.png" height="80" style="float:right">
+
+        </div>
+        <br />
+
+        <div style="padding: 10px;">
+            <span style="font-size: 36px;">En Blanco: </span> <span id="ResultadosBlanco"
+                style="font-size: 36px;">0</span>
+        </div>
+
+        <br />
+
+        Votantes:
+        <div id="Votantes" style="border: 1px solid black;padding: 10px;">
+
+
+        </div>
+
+
+        </table>
+
+    </div>
+    <div id="footer" style="margin-top: 240px;">
+        <p id="legal">Copyright &copy; AtomoHost. All Rights Reserved.
+            Designed by <a href="http://www.freecsstemplates.org/">Free CSS
+                Templates</a>.</p>
+        <p id="links"><a href="#">Privacy Policy</a> | <a href="#">Terms
+                of Use</a></p>
+    </div>
+    <br />
+    <br />
+</body>
+
+</html>
