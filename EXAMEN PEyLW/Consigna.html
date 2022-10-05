@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Parcial JS - Consigna</title>
+    <link href="default.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="header">
+        <div id="logo" style="margin-left: 15px">
+            <h1><a href="#">Programación Estática y Laboratorio Web</a></h1>
+            <h2><a href="#">Parcial JS - 24/06/2022</a></h2>
+        </div>
+    </div>
+    <div id="menu">
+        <ul>
+            <li><a href="Consigna.html">Consigna</a></li>
+            <li><a href="EjercicioJSParcial.html">HOJA Ejercicio</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <div id="main">
+            <h3>Ejercicio </h3>
+                <p>
+                    Un centro electoral debe ir registrando los votos que se hacen a los candidatos.
+                    Los candidatos son dos: KODOS y KANG.
+                    A tales efectos se encuentra desarrollado un formulario en que cual se ingresa:</p>
+                <ul>
+                    <li>DNI (el voto no es secreto)</li>
+                    <li>El voto (escrito en texto). Hay 3 opciones
+                        <ul>
+                            <li>KODOS</li>
+                            <li>KANG</li>
+                            <li>Blanco</li>
+                        </ul>
+                    </li>
+                    <li>Sexo. Debe ser alguna de las siguientes: M/F</li>
+                </ul>
+
+
+
+                <p>La aplicación debe realizar las siguientes acciones al momento de presionar
+                    registrar: </p>
+                <ul>
+                    <li>Verificar que todos los campos del formulario estén completos.</li>
+                    <li>Verificar que se haya escrito alguna de las tres opciones posibles sin importar may/min</li>
+                    <li>Verificar que el DNI sea un número en un rango entre 1.000.000 y 999.999.999</li>
+                    <li>Verificar que el sexo sea "M" o "F" (sin importar may/min).</li>
+                    <li>Verificar que esa persona (DNI) no haya votado previamente.</li>
+                    <li>Luego de realizadas las verificaciones, debe sumarse el voto al candidato que corresponde.
+                        Para ello estan creados los siguientes spans que inicialmente tiene el numero "0"
+                        <ul>
+                            <li>KANG (span ResultadosKang)</li>
+                            <li>KODOS (span ResultadosKodos)</li>
+                            <li>En Blanco (span ResultadosBlanco)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        El DNI debe <strong>adicionarse</strong> al div "Votantes", separado por "-"
+                    </li>
+                    <li>En el caso de que un DNI ya haya sido registrado el sistema debe emitir una alerta con el
+                        mensaje "Esta
+                        persona ya emitió su voto. El fraude está mal claro que sí" y no debe permitir continuar.
+                        Ver más abajo.
+                    </li>
+                    <li>
+                        Luego de la emisión del voto debe limpiarse el formulario
+                    </li>
+                </ul>
+
+                <p>
+                    Se considerará favorablemente que los errores detectados (por ejemplo numero de DNI incorrecto) se
+                    informen mediante
+                    cambios de estilo en el input, en lugar de un alert.
+                    Si cambia un estilo para marcar un error recuerde revertir el cambio cuando se limpia el formulario
+                    para el siguiente voto.
+                </p>
+                <p>
+                    <strong>Completar la p&aacute;gina EjercicioJSParcial.html con el código Javascript que
+                        corresponde</strong>
+                <p>
+                    <small>* La seccion script ya está creada. Encontrará una ayuda allí.</small>
+                </p>
+
+                <br />
+                <br />
+
+        </div>
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div id="footer">
+        <p id="legal">Copyright © AtomoHost. All Rights Reserved. Designed by ned by <a
+                href="http://www.freecsstemplates.org/">Free CSS
+                Templates</a>.</p>
+        <p id="links"><a href="#">Privacy Policy</a> | <a href="#">Terms
+                of Use</a></p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Parcial JS </title>
+    <link href="default.css" rel="stylesheet" type="text/css" />
+
+    <script>
+        // Resuelva el parcial en esta seccion
+        // Ud. puede usar o no esta variable. No es obligatorio.
+        
+        document.addEventListener('DOMContentLoaded', ()=> {
+           
+            console.log("El documento se conecto")
+            var RegistroVotantes = new Array();
+            
+            //var candidato = document.getElementById("txCandidato").value.toUpperCase();
+            var candidato = document.getElementById("txCandidato");
+            console.log (candidato);
+            //var documento = document.getElementById("txDNI").value;
+            var documento = document.getElementById("txDNI");
+            console.log (documento);
+            //var sexo = document.getElementById("txSexo").value.toUpperCase();
+            var sexo = document.getElementById("txSexo");
+            console.log (sexo);
+            var formulario = document.getElementById("formulario");
+            var boton = document.getElementById("boton");
+           
+            function voto(){
+               
+               var resultCandid = validarCandidato();
+               var resultDocum = validarDocumento();
+               var resultSexo = validarSexo();
+
+               if(resultCandid && resultDocum && resultSexo ){
+                   console.log ("su formulario se envio");
+               }
+               
+
+           }
+
+        })
+            
+           
+            function validarCandidato(){
+                salida= false;
+                boton.addEventListener('submit', ()=>{
+                    if(candidato.value.toUpperCase() == "KANG"){
+                        document.getElementById("txCandidato").style.borderColor = "green";
+                        salida= true;
+
+
+                    }else if (candidato.value.toUpperCase() == "KODOS"){
+                        document.getElementById("txCandidato").style.borderColor = "green";
+                        salida= true;
+
+                    }else if (candidato.value.toUpperCase() == "BLANCO"){
+                        document.getElementById("txCandidato").style.borderColor = "green";
+                        salida= true;
+
+                    }else{
+                        document.getElementById("txCandidato").style.borderColor = "red";
+                        salida= false;
+                    }
+
+                })
+                return salida;
+
+            }
+
+            function validarDocumento(){
+                salida = false;
+                boton.addEventListener('submit', ()=>{
+                    var dni = parseInt(documento.value);
+                    if(dni >=1000000 && dni<999999999){
+                        document.getElementById("txCandidato").style.borderColor = "green";
+                        salida= true;
+                    }else{
+                        document.getElementById("txCandidato").style.borderColor = "red";
+                        salida= false;
+                    }
+                })
+                return salida;
+            }
+
+            function validarSexo(){
+                salida = false;
+                sexos = 
+                boton.addEventListener('submit', ()=>{
+            
+                    if(sexo.value.toUpperCase() == "F" || sexo.value.toUpperCase() == "M"){
+                        document.getElementById("txCandidato").style.borderColor = "green";
+                        salida= true;
+                    }else{
+                        document.getElementById("txCandidato").style.borderColor = "red";
+                        salida= false;
+                    }
+                })
+                return salida;
+            }
+
+
+        
+        
+
+
+       
+        
+        // https://www.w3schools.com/jsref/jsref_push.asp
+
+
+
+    </script>
+
+
+</head>
+
+<body>
+    <div id="header">
+        <div id="logo" style="margin-left: 15px">
+            <h1><a href="#">Programación Estática y Laboratorio Web</a></h1>
+            <h2><a href="#">Parcial JS - 24/06/2022</a></h2>
+        </div>
+    </div>
+    <div id="menu">
+        <ul>
+            <li><a href="Consigna.html">Consigna</a></li>
+            <li><a href="EjercicioJSParcial.html">HOJA Ejercicio</a></li>
+        </ul>
+    </div>
+    <div id="content">
+
+        <form action="" class="formulario" id="formulario">
+            <table style="padding: 10px;">
+                <tr>
+                    <td>Candidato:</td>
+                    <td><input id="txCandidato" name="txCandidato" type="text" style="width:280px" /></td>
+                </tr>
+                <tr>
+                    <td>DNI:</td>
+                    <td><input id="txDNI" name="txDNI" type="text" style="width:280px" /></td>
+                </tr>
+                <tr>
+                    <td>Sexo:</td>
+                    <td><input id="txSexo" name="txSexo" type="text" style="width:64px" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input id= "boton" type="button" value="Registrar"></td>
+                </tr>
+
+            </table>
+        </form>
+        <p></p>
+
+        <div style="background-color: lightblue; border: 1px solid black;padding: 10px;">
+            <span id="ResultadosKang" style="font-size: 72px;">0</span>
+            <img src="images/VoteKang.png" height="80" style="float:right">
+
+        </div>
+        <br />
+
+        <div style="background-color: lightpink; border: 1px solid black;padding: 10px;">
+            <span id="ResultadosKodos" style="font-size: 72px;">0</span>
+            <img src="images/VoteKodos.png" height="80" style="float:right">
+
+        </div>
+        <br />
+
+        <div style="padding: 10px;">
+            <span style="font-size: 36px;">En Blanco: </span> <span id="ResultadosBlanco"
+                style="font-size: 36px;">0</span>
+        </div>
+
+        <br />
+
+        Votantes:
+        <div id="Votantes" style="border: 1px solid black;padding: 10px;">
+
+
+        </div>
+
+
+        </table>
+
+    </div>
+    <div id="footer" style="margin-top: 240px;">
+        <p id="legal">Copyright &copy; AtomoHost. All Rights Reserved.
+            Designed by <a href="http://www.freecsstemplates.org/">Free CSS
+                Templates</a>.</p>
+        <p id="links"><a href="#">Privacy Policy</a> | <a href="#">Terms
+                of Use</a></p>
+    </div>
+    <br />
+    <br />
+</body>
+
+</html>
